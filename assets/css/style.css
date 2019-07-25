@@ -6,3 +6,11 @@ body {
     font-size: 64px;
     color: #424344;
 };
+
+.container {
+    background-color: coral;
+};  
+
+.form-check-label {
+    display: inline;
+};

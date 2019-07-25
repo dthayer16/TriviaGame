@@ -62,7 +62,7 @@ function buildQuestion(question, index){
 
     $questionContainer.append($question)
     for(var key in question.answers){
-        var $formCheck = $("<div class='form-check'>");
+        var $formCheck = $("<div class='form-check form-check-inline'>");
         var $input = $("<input class='form-check-input' type='radio'>").val(key);
         $input.attr("name", index);
         var $label = $("<label class='form-check-label'>").text(question.answers[key]);
@@ -75,10 +75,10 @@ function buildQuestion(question, index){
 $("#submit").on("click", function(){
     // Grab the values from selected radio button
     var userAnswers = [];
-    $.each($("input[name = 'index']:checked"), function() {
+    $.each($("input[type= 'radio']:checked"), function() {
         userAnswers.push($(this).val());    
     });
-    console.log(userAnswers);
+    
 })
 
 
