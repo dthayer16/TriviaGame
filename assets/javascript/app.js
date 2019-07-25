@@ -1,7 +1,7 @@
 // array of objects
 const myQuestions = [
     {
-        question: "Which of these team is NOT in the National League West?", 
+        question: "Which of these team is NOT in the National League West?",
         answers: {
             a: "San Fransico Giants",
             b: "Arizona Diamondbacks",
@@ -11,7 +11,7 @@ const myQuestions = [
         correctAnswer: "d"
     },
     {
-        question: "Which of these players DID NOT play for the Arizona Diamondbacks?", 
+        question: "Which of these players DID NOT play for the Arizona Diamondbacks?",
         answers: {
             a: "Luis Gonzalez",
             b: "Randy Johnson",
@@ -21,7 +21,7 @@ const myQuestions = [
         correctAnswer: "c"
     },
     {
-        question: "What is the MINUMUM amount of innings a Major League baseball innings is played?", 
+        question: "What is the MINUMUM amount of innings a Major League baseball innings is played?",
         answers: {
             a: "4",
             b: "9",
@@ -31,7 +31,7 @@ const myQuestions = [
         correctAnswer: "b"
     },
     {
-        question: "Which player won the 2019 Home Run Derby?", 
+        question: "Which player won the 2019 Home Run Derby?",
         answers: {
             a: "Vladimir Guerro Jr.",
             b: "Peter Alonso",
@@ -41,7 +41,7 @@ const myQuestions = [
         correctAnswer: "b"
     },
     {
-        question: "What shape is a baseball field commonly referred to as?", 
+        question: "What shape is a baseball field commonly referred to as?",
         answers: {
             a: "Diamond",
             b: "Box",
@@ -52,16 +52,40 @@ const myQuestions = [
     }
 ]
 
+let count = 60;
+let intervalId;
+
+
+function countDown() {
+
+    clearInterval(intervalId);
+    intervalId = setInterval(decrement, 1000);
+
+    function decrement() {
+
+        count--;
+
+        $("#timer").html("<h2>" + count + "</h2>");
+
+        if (count <= 0) {
+            clearInterval(intervalId);
+            submit();
+        }
+    }
+};
+
 $("#details").hide();
 
-function buildQuestion(question, index){
+countDown();
+
+function buildQuestion(question, index) {
     var $quiz = $("#quiz");
     var $questionContainer = $("<div class='question-container'>").attr("data-index", index);
     var $question = $("<h3>").text(question.question);
-    
+
 
     $questionContainer.append($question)
-    for(var key in question.answers){
+    for (var key in question.answers) {
         var $formCheck = $("<div class='form-check form-check-inline'>");
         var $input = $("<input class='form-check-input' type='radio'>").val(key);
         $input.attr("name", index);
@@ -72,15 +96,16 @@ function buildQuestion(question, index){
     $quiz.append($questionContainer);
 }
 
-$("#submit").on("click", function(){
+
+$("#submit").on("click", function () {
     // Grab the values from selected radio button
     var userAnswers = [];
-    $.each($("input[type= 'radio']:checked"), function() {
-        userAnswers.push($(this).val());    
+    $.each($("input[type= 'radio']:checked"), function () {
+        userAnswers.push($(this).val());
     });
-    
+
 })
 
 
-myQuestions.forEach(buildQuestion)
+myQuestions.forEach(buildQuestion);
 
