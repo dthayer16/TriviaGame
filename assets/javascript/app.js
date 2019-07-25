@@ -31,6 +31,56 @@ const myQuestions = [
         correctAnswer: "b"
     },
     {
+        question: "How far away is the pitcher's mound to home plate?",
+        answers: {
+            a: "60ft 6in",
+            b: "55ft",
+            c: "49ft 5in",
+            d: "65ft 4in"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "What is the longest official homerun ever hit?",
+        answers: {
+            a: "600ft",
+            b: "525ft",
+            c: "575ft",
+            d: "550ft"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "What is the Arizona Diamondbacks Mascot's name?",
+        answers: {
+            a: "Howler",
+            b: "Mr. Met",
+            c: "Baxter",
+            d: "Lou Seal"
+        },
+        correctAnswer: "c"
+    },
+    {
+        question: "Which franchise has the most Hall of Fame Players?",
+        answers: {
+            a: "New York Yankees, 23",
+            b: "San Francisco Giants, 17",
+            c: "Los Angeles Dodgers, 15",
+            d: "Cleveland Indians, 13"
+        },
+        correctAnswer: "a"
+    },
+    {
+        question: "Which player was nicknamed Mr. November?",
+        answers: {
+            a: "David Ortiz",
+            b: "Mariano Rivera",
+            c: "Reggie Jackson",
+            d: "Derek Jeter"
+        },
+        correctAnswer: "d"
+    },
+    {
         question: "Which player won the 2019 Home Run Derby?",
         answers: {
             a: "Vladimir Guerro Jr.",
@@ -52,11 +102,28 @@ const myQuestions = [
     }
 ]
 
-let count = 60;
+let count = 120;
 let intervalId;
 let correct = 0;
 let incorrect = 0;
-let unanswered = 0;
+
+
+function updateScore() {
+    $("#correctScreen").text(correct);
+    $("#wrongScreen").text(incorrect);
+};
+
+function calculateScore() {
+    $("input[type= 'radio']:checked").each(function () {
+        var value = $(this).val();
+        var index = $(this).attr("name");
+        if(myQuestions[index].correctAnswer === value){
+            correct++;
+        } else {
+            incorrect++;
+        }
+    });
+};
 
 function stop() {
     clearInterval(intervalId);
@@ -80,6 +147,8 @@ function countDown() {
         if (count <= 0) {
             stop();
             alert("TIMES UP!");
+            calculateScore();
+            updateScore();
         }
     }
 };
@@ -106,25 +175,13 @@ function buildQuestion(question, index) {
     $quiz.append($questionContainer);
 }
 
+myQuestions.forEach(buildQuestion);
 
 $("#submit").on("click", function () {
     stop();
-    $("input[type= 'radio']:checked").each(function () {
-        var value = $(this).val();
-        var index = $(this).attr("name");
-        if(myQuestions[index].correctAnswer === value){
-            correct++;
-        } else if (myQuestions[index].correctAnswer !== value) {
-            incorrect++;
-        } else {
-            unanswered++;
-        }
-    });
-    $("#correctScreen").text(correct);
-    $("#wrongScreen").text(incorrect);
-    $("#unanswered").text(unanswered);
+    calculateScore();
+    updateScore();
 })
 
 
-myQuestions.forEach(buildQuestion);
 
