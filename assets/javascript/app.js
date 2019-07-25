@@ -69,6 +69,7 @@ function countDown() {
 
         if (count <= 0) {
             clearInterval(intervalId);
+            $("#timer").hide();
             submit();
         }
     }
@@ -98,6 +99,11 @@ function buildQuestion(question, index) {
 
 
 $("#submit").on("click", function () {
+
+    $("#quiz").hide();
+    $("#timer").hide();
+    $("#details").show();
+    
     // Grab the values from selected radio button
     var userAnswers = [];
     $.each($("input[type= 'radio']:checked"), function () {
