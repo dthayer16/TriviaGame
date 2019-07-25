@@ -54,7 +54,17 @@ const myQuestions = [
 
 let count = 60;
 let intervalId;
+let correct = 0;
+let incorrect = 0;
+let unanswered = 0;
 
+function stop() {
+    clearInterval(intervalId);
+    $("#timer").hide();
+    $("#quiz").hide();
+    $("#submit").hide();
+    $("#details").show();
+};
 
 function countDown() {
 
@@ -68,9 +78,8 @@ function countDown() {
         $("#timer").html("<h2>" + count + "</h2>");
 
         if (count <= 0) {
-            clearInterval(intervalId);
-            $("#timer").hide();
-            submit();
+            stop();
+            alert("TIMES UP!");
         }
     }
 };
@@ -99,17 +108,21 @@ function buildQuestion(question, index) {
 
 
 $("#submit").on("click", function () {
-
-    $("#quiz").hide();
-    $("#timer").hide();
-    $("#details").show();
-    
-    // Grab the values from selected radio button
-    var userAnswers = [];
-    $.each($("input[type= 'radio']:checked"), function () {
-        userAnswers.push($(this).val());
+    stop();
+    $("input[type= 'radio']:checked").each(function () {
+        var value = $(this).val();
+        var index = $(this).attr("name");
+        if(myQuestions[index].correctAnswer === value){
+            correct++;
+        } else if (myQuestions[index].correctAnswer !== value) {
+            incorrect++;
+        } else {
+            unanswered++;
+        }
     });
-
+    $("#correctScreen").text(correct);
+    $("#wrongScreen").text(incorrect);
+    $("#unanswered").text(unanswered);
 })
 
 
