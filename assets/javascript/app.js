@@ -21,7 +21,7 @@ const myQuestions = [
         correctAnswer: "c"
     },
     {
-        question: "What is the MINUMUM amount of innings a Major League baseball innings is played?",
+        question: "What is the MINUMUM amount of innings a Major League baseball is played?",
         answers: {
             a: "4",
             b: "9",
